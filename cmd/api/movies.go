@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/bigh0124/golang-backend/internal/data"
 	"github.com/bigh0124/golang-backend/internal/validator"
@@ -59,12 +58,10 @@ func (app *application) showMovieHandler(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	movie := data.Movie{
-		ID:        id,
-		CreatedAt: time.Now(),
-		Runtime:   101,
-		Genres:    []string{"drama", "chill"},
-		Version:   1,
+	movie, err := app.models.Movies.Get(id)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+		return
 	}
 
 	err = app.writeJSON(w, http.StatusOK, envelope{"movie": movie}, nil)

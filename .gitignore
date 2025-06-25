@@ -41,6 +41,7 @@ Desktop.ini
 
 # 環境變數和設定檔
 .env
+.envrc
 .env.local
 .env.development
 .env.test
